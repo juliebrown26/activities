@@ -139,6 +139,7 @@ namespace activities.Controllers
         [Route("activity/{EventId}")]
         public IActionResult EventDetails(int EventId)
         {
+            int? currentUserId = HttpContext.Session.GetInt32("UserId");
             EventViewModel model = new EventViewModel()
             {
                 Event = DbContext.Events
@@ -146,8 +147,7 @@ namespace activities.Controllers
                 .ThenInclude(r => r.User)
                 .FirstOrDefault(w => w.EventId == EventId),
 
-                Users = DbContext.Users.Where(u => u.Attending.All(a => a.EventId == EventId))
-                .ToList()
+                User = DbContext.Users.Where(u => u.UserId == (int)currentUserId).FirstOrDefault()
             };
             return View(model);
         }

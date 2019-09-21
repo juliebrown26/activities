@@ -16,7 +16,32 @@
             <h2>@Model.Event.Title</h2>
         </div>
         <div class="col" style="margin: 25px">
-            <button class="btn btn-warning">Join</button>
+            @if (@Model.Event.Coordinator == @Model.User.FirstName)
+                {
+                    <form asp-action="Remove" asp-controller="Home" method="post">
+                        <input hidden asp-for="EventToDelete" value="@Model.Event.EventId" />
+                        <button type="submit" class="btn btn-warning">Remove</button>
+                    </form>
+                }
+            else
+            {
+                @if (!Model.Event.Attending.Any(a => a.UserId == Model.User.UserId))
+                {
+                    <form asp-action="Attending" asp-controller="Home" method="post">
+                        <input hidden asp-for="Attending.UserId" value="@Model.User.UserId">
+                        <input hidden asp-for="Attending.EventId" value="@Model.Event.EventId">
+                        <button type="submit" class="btn btn-primary">Join</button>
+                    </form>
+                }
+                else
+                {
+                    <form asp-action="Leaving" asp-controller="Home" method="post">
+                        <input hidden asp-for="Attending.EventId" value="@Model.Event.EventId">
+                        <input hidden asp-for="Attending.UserId" value="@Model.User.UserId">
+                        <button type="submit" class="btn btn-danger">Leave</button>
+                    </form> 
+                }        
+            }
         </div>
     </div>
     <div class="row" style="margin: 25px">

@@ -6,8 +6,10 @@ namespace activities.Models
 {
     public class EventViewModel
     {
-        public List<User> Users { get; set; }
+        public User User { get; set; }
         public Event Event { get; set; }
         public Attending Attending { get; set; }
+
+        public int EventToDelete { get; set; }
     }
 }
