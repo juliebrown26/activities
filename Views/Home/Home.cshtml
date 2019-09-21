@@ -1,0 +1,69 @@
+@model HomeViewModel
+<div class="container">
+    <div class="row" style="margin-top: 30px; border-bottom: 2pt solid black;">
+        <div class="col-sm-7">
+            <h1>Dojo Activity Center</h1>
+        </div>
+        <div class="col-sm-3">
+            <h4>Welcome, @Model.User.FirstName!</h4>
+        </div>
+        <div class="col-sm-2">
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <th>Activity</th>
+                <th>Date and Time</th>
+                <th>Duration</th>
+                <th>Event Coordinator</th>
+                <th>Number of Participants</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+            @foreach(Event item in Model.Events)
+            {
+                <tr>
+                    <td><a href="/activity/@item.EventId">@item.Title</a></td>
+                    <td>@item.Date.ToString("MM/dd") at @item.Time.ToString("hh:mm tt")</td>
+                    <td>@item.numDuration @item.strDuration</td>
+                    <td>@item.Coordinator</td>
+                    <td>@item.Attending.Count</td>
+                    <td>
+                        @if (@item.Coordinator == @Model.User.FirstName)
+                            {
+                                <form asp-action="Remove" asp-controller="Home" method="post">
+                                    <input hidden asp-for="EventToDelete" value="@item.EventId" />
+                                    <button type="submit" class="btn btn-warning">Remove</button>
+                                </form>
+                            }
+                        else
+                        {
+                           @if (!item.Attending.Any(a => a.UserId == Model.User.UserId))
+                            {
+                                <form asp-action="Attending" asp-controller="Home" method="post">
+                                    <input hidden asp-for="Attending.UserId" value="@Model.User.UserId">
+                                    <input hidden asp-for="Attending.EventId" value="@item.EventId">
+                                    <button type="submit" class="btn btn-primary">Join</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="Leaving" asp-controller="Home" method="post">
+                                    <input hidden asp-for="Attending.EventId" value="@item.EventId">
+                                    <input hidden asp-for="Attending.UserId" value="@Model.User.UserId">
+                                    <button type="submit" class="btn btn-danger">Leave</button>
+                                </form> 
+                            }        
+                        }   
+                    </td>
+                </tr>
+            }    
+            </tbody>
+        </table>
+    </div>
+        <div class="row" style="justify-content: flex-end;">
+        <a class="btn btn-info" href="/new" role="button">Add New Activity!</a>
+    </div>
+</div>

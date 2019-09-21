@@ -1,0 +1,51 @@
+@model EventViewModel
+<div class="container">
+    <div class="row" style="margin-top: 30px; border-bottom: 2pt solid black;">
+        <div class="col-sm-7">
+            <h1>Dojo Activity Center</h1>
+        </div>
+        <div class="col-sm-3">
+            <a href="/home">Home</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="margin: 25px">
+            <h2>@Model.Event.Title</h2>
+        </div>
+        <div class="col" style="margin: 25px">
+            <button class="btn btn-warning">Join</button>
+        </div>
+    </div>
+    <div class="row" style="margin: 25px">
+        <div class="col-sm-4">
+            <h3>Event Coordinator:</h3>
+        </div>
+        <div class="col-sm-8">
+            <h3>@Model.Event.Coordinator</h3>
+        </div>  
+    </div>
+    <div class="row" style="margin: 25px">
+        <div class="col-sm-4">
+            <h3>Description:</h3>
+        </div>
+        <div class="col-sm-8">
+            <h3>@Model.Event.Description</h3>
+        </div>
+    </div>
+    <div class="row" style="margin: 25px">
+        <div class="col-sm-4">
+            <h3>Participants:</h3>
+        </div>
+        <div class="col-sm-8">
+           <ul>
+            @foreach(Attending item in Model.Event.Attending)
+            {
+                <li><h3>@item.User.FirstName</h3></li>
+            } 
+            </ul>  
+        </div>
+    </div>    
+</div>

@@ -1,0 +1,71 @@
+@model Event
+<div class="container">
+    <div class="row" style="margin-top: 30px; border-bottom: 2pt solid black;">
+        <div class="col-sm-7">
+            <h1>Dojo Activity Center</h1>
+        </div>
+        <div class="col-sm-3">
+            <a href="/home">Home</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 15px;">
+        <h3>Create an Activity!</h3>
+    </div>
+    <form asp-action="CreateEvent" asp-controller="Home" method="post">
+        <div class="row" style="margin-top: 25px">
+            <div class="col">
+                <span asp-validation-for="Title" style="color: red;"></span><br>
+                <div class="form-group row">
+                    <label asp-for="Title" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input class="form-control" asp-for="Title">
+                    </div>
+                </div>
+                <span asp-validation-for="Date" style="color: red;"></span><br>
+                <div class="form-group row">
+                    <label asp-for="Date" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" asp-for="Date">
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <span asp-validation-for="Time" style="color: red;"></span><br>
+                <div class="form-group row">
+                    <label asp-for="Time" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input type="time" class="form-control" asp-for="Time">
+                    </div>
+                </div>
+                <span asp-validation-for="numDuration" style="color: red;"></span><br>
+                <div class="form-group row">
+                    <label asp-for="numDuration" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-5">
+                        <input type="number" class="form-control" asp-for="numDuration">
+                    </div>
+                    <span asp-validation-for="strDuration" style="color: red;"></span><br>
+                    <div class="col-sm-5">
+                        <select class="form-control" asp-for="strDuration">
+                            <option>Days</option>
+                            <option>Hour(s)</option>
+                            <option>Minutes</option>
+                        </select>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span asp-validation-for="Description" style="color: red;"></span><br>
+        <div class="form-group row">
+            <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+            </div>
+        </div>
+        <div class="row" style="justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary">Create Event</button>
+        </div>
+    </form>
+</div>
